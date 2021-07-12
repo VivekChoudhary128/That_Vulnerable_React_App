@@ -8,7 +8,7 @@ const Admin = () => {
 
     const sendCreds = (e) => {
         e.preventDefault()
-        fetch('http://localhost:5000/check_credentials', {
+        fetch('/api/check_credentials', {
             method: 'POST',
             body: JSON.stringify(creds),
             headers: {

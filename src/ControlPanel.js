@@ -11,7 +11,7 @@ const ControlPanel = ({ username }) => {
         const formData = new FormData()
         formData.append('file', ip_file.current.files[0])
 
-        fetch('http://localhost:5000/file_upload', {
+        fetch('/api/file_upload', {
             method: 'POST',
             body: formData,
         }).then(
@@ -40,7 +40,7 @@ const ControlPanel = ({ username }) => {
         e.preventDefault()
         var username = user_name.current.value;
 
-        fetch('http://localhost:5000/change_username', {
+        fetch('/api/change_username', {
             method: 'POST',
             body: JSON.stringify({ 'new_username': username })
         }).then(
@@ -52,10 +52,6 @@ const ControlPanel = ({ username }) => {
             set_message({ 'message': 'An error occured please try again.' })
         }
         );
-    }
-
-    const open_link_tab = (link) => {
-        window.location.href = link;
     }
 
     return (

@@ -1,2 +1,2 @@
 User-agent: *
-Disallow: AppControlRoom_01
+Disallow: dev_log.txt
