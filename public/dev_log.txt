@@ -1,0 +1,19 @@
+12/7/2021 5:29 PM
+
+Adam - hey Matt ! seems like the manager needs an "admin" panel.
+
+Matt - What for lol XD 
+
+Adam - They said it'll be useful to leave notes to the dev about the website.
+
+Matt - Seems legit.
+
+.....
+
+13/7/2021 1:40 PM 
+
+Adam - Hey I've made a "AdMiN" panel that we were talking about. XD, also added a cool little feature to change the usernames.
+
+Matt - neat, where's it at?
+
+Adam - ehh? I wanted to make it less obvious, so named it /appControlRoom_01
