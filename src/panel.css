@@ -1,0 +1,14 @@
+#file_upload {
+    left: 60vw;
+}
+
+.upload_file {
+    width: fit-content;
+}
+
+#new_username {
+    width: 40vw;
+}
+.submit_username {
+    width: fit-content;
+}
