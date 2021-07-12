@@ -67,12 +67,12 @@ const ControlPanel = ({ username }) => {
             <h5> Uploaded Notes </h5>
             <div>
                 {
-                    localStorage.getItem('content').split(';').map((file_url, key) => (
+                    localStorage.getItem('content') !== null ? localStorage.getItem('content').split(';').map((file_url, key) => (
                         <div>
                             <a href={file_url} target='_blank' >{file_url}</a>
                             <br></br>
                         </div>
-                    ))
+                    )) : null
                 }
             </div>
             <br></br>
