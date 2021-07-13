@@ -1,17 +1,22 @@
 import './panel.css'
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
-const ControlPanel = ({ username }) => {
+const ControlPanel = ({ base_url }) => {
+
     const ip_file = useRef()
     const user_name = useRef()
     const [message, set_message] = useState({ 'message': '' })
+    var username =  localStorage.getItem('username')
 
+    useEffect(() => {
+        username = localStorage.getItem('username')
+    })
     const upload_file = (e) => {
         e.preventDefault()
         const formData = new FormData()
         formData.append('file', ip_file.current.files[0])
 
-        fetch('/api/file_upload', {
+        fetch(base_url + '/api/file_upload', {
             method: 'POST',
             body: formData,
         }).then(
@@ -20,7 +25,7 @@ const ControlPanel = ({ username }) => {
             if (e.message === 'File Uploaded') {
                 var host = window.location.protocol + '//' + window.location.host + '/'
                 var exist_files = localStorage.getItem('content')
-                if (exist_files != null) {
+                if (exist_files !== null) {
                     localStorage.setItem('content', exist_files + ';' + host + 'content/' + username + '/' + e.filename)
                 } else {
                     localStorage.setItem('content', host + 'content/' + username + '/' + e.filename)
@@ -39,15 +44,15 @@ const ControlPanel = ({ username }) => {
     const change_username = (e) => {
         e.preventDefault()
         var new_username = user_name.current.value;
-
-        fetch('/api/change_username', {
+        fetch(base_url + '/api/change_username', {
             method: 'POST',
             body: JSON.stringify({ 'new_username': new_username })
         }).then(
             response => response.json()
         ).then((e) => {
-            if (e.message == 'Username Changed') {
-                localStorage.setItem('content', localStorage.setItem('content').replace(username, new_username))
+            if (e.message === 'Username Changed') {
+                localStorage.setItem('content', localStorage.getItem('content').replace(username, new_username))
+                localStorage.setItem('username', new_username)
             }
             set_message({ 'message': e.message })
         }
@@ -72,7 +77,7 @@ const ControlPanel = ({ username }) => {
                 {
                     localStorage.getItem('content') !== null ? localStorage.getItem('content').split(';').map((file_url, key) => (
                         <div>
-                            <a href={file_url} target='_blank' >{file_url}</a>
+                            <a href={file_url} target='_blank' key={key}>{file_url}</a>
                             <br></br>
                         </div>
                     )) : null

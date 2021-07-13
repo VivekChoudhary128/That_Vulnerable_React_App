@@ -5,10 +5,11 @@ import './Admin.css';
 const Admin = () => {
     const [creds, set_creds] = useState({ username: '', password: '' })
     const [login_state, set_login_state] = useState({ message: '', login: false })
+    const base_url = '' // http://localhost:5000
 
     const sendCreds = (e) => {
         e.preventDefault()
-        fetch('/api/check_credentials', {
+        fetch(base_url + '/api/check_credentials', {
             method: 'POST',
             body: JSON.stringify(creds),
             headers: {
@@ -29,7 +30,7 @@ const Admin = () => {
 
     return (
         <div>
-            {login_state.login === true ? <ControlPanel username={creds['username']} /> :
+            {login_state.login === true ? <ControlPanel username={creds['username']} base_url={base_url}/> :
                 <div className='login_component'>
                     <h2>Login Into Admin Panel</h2>
                     <form method="post">

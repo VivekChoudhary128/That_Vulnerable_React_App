@@ -1,0 +1,37 @@
+Set up a vulnerable web-app on Azure Machine.
+    1) dirsearch to find robots.txt , which has admin panel. admin panel. 
+    2) brute force.
+    3) Rev shell.
+    4) Proxy tutorial.
+
+when we have a websute, after doign the basic reckon we look for any vulneberable elements, 
+what are they?
+they are inputs, because they are dynamic.
+
+Speach:
+
+intro => "you may find yourself in a bit of a conundrum: you have no tools to execute
+network attacks. No netcat. No Wireshark. No compiler and no means to
+install one. However, you might be surprised to find that in many cases,
+you’ll find a Python install, and so that is where we will begin"
+
+
+proxy => "There are a number of reasons to have a TCP proxy in your tool belt, both
+for forwarding traffic to bounce from host to host, but also when assessing
+network-based software. When performing penetration tests in enterprise
+environments, you’ll commonly be faced with the fact that you can’t run
+Wireshark, that you can’t load drivers to sniff the loopback on Windows, or
+that network segmentation prevents you from running your tools directly
+against your target host. I have employed a simple Python proxy in a number
+of cases to help understand unknown protocols, modify traffic being
+sent to an application, and create test cases for fuzzers"
+
+rev shell => "Netcat is the utility knife of networking, so it’s no surprise that shrewd
+systems administrators remove it from their systems. On more than one
+occasion, I’ve run into servers that do not have netcat installed but do
+have Python. In these cases, it’s useful to create a simple network client
+and server that you can use to push files, or to have a listener that gives you
+command-line access. If you’ve broken in through a web application, it is
+definitely worth dropping a Python callback to give you secondary access
+without having to first burn one of your trojans or backdoors."
+  
