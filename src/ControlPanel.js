@@ -38,14 +38,17 @@ const ControlPanel = ({ username }) => {
 
     const change_username = (e) => {
         e.preventDefault()
-        var username = user_name.current.value;
+        var new_username = user_name.current.value;
 
         fetch('/api/change_username', {
             method: 'POST',
-            body: JSON.stringify({ 'new_username': username })
+            body: JSON.stringify({ 'new_username': new_username })
         }).then(
             response => response.json()
         ).then((e) => {
+            if (e.message == 'Username Changed') {
+                localStorage.setItem('content', localStorage.setItem('content').replace(username, new_username))
+            }
             set_message({ 'message': e.message })
         }
         ).catch(() => {

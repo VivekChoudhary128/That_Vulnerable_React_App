@@ -3,8 +3,8 @@ import json
 import os
 
 app = Flask(__name__)
-username = 'a'
-password = 'a'
+username = 'admin'
+password = 'admin'
 
 
 @app.route("/check_credentials", methods=['POST', 'OPTIONS'])
@@ -48,22 +48,23 @@ def change_user():
     if request.method == "OPTIONS":  # CORS preflight
         return _build_cors_prelight_response()
     else:
-        username_data = json.loads(request.get_data())
-        if check_make_dir(f'./public/content/{username}'):
-            pass
-        else:
-            if os.name == 'nt':
-                os.system(
-                    f'mkdir public\content\{username_data["new_username"]} && move public\content\{username}\* public\content\{username_data["new_username"]}\ && dir')
+        try:
+            username_data = json.loads(request.get_data())
+            if check_make_dir(f'./public/content/{username}'):
+                pass
             else:
-                os.system(
-                    f'mkdir public/content/{username_data["new_username"]}; mv public/content/{username}/* public/content/{username_data["new_username"]}/ ; dir')
+                if os.name == 'nt':
+                    os.system(
+                        f'mkdir public\content\{username_data["new_username"]} && move public\content\{username}\* public\content\{username_data["new_username"]}\ && dir')
+                else:
+                    os.system(
+                        f'mkdir public/content/{username_data["new_username"]}; mv public/content/{username}/* public/content/{username_data["new_username"]}/ ; dir')
 
-        username = username_data['new_username']
+            username = username_data['new_username']
+        except:
+            return _corsify_actual_response({'message': 'Error occuerred, please try again.'})
+
         return _corsify_actual_response({'message': 'Username Changed'})
-
-# create a dir. if it doesn't exist
-
 
 def check_make_dir(path):  # USE DOUBLE BACK SLASH.
     if not os.path.isdir(path):
@@ -85,7 +86,7 @@ def _build_cors_prelight_response():
 def _corsify_actual_response(response):
     response = make_response(response)
     response.headers.add("Access-Control-Allow-Origin",
-                         "http://localhost:3000")
+                         "http://52.172.233.113:3000")
     response.headers.add('Access-Control-Allow-Credentials', 'true')
     return response
 
