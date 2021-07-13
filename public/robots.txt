@@ -1,2 +1,2 @@
 User-agent: *
-Disallow: dev_log.txt
+Disallow: /dev_log.txt
