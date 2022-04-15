@@ -3,9 +3,29 @@ import json
 import os
 
 app = Flask(__name__)
-username = 'admin'
-password = 'admin'
+username = 'administrator'
+password = 'password123'
 
+
+comments = []
+
+@app.route("/api/get_comments", methods=['GET', 'OPTIONS'])
+def set_comment():
+    global comments
+    if request.method == "OPTIONS":  # CORS preflight
+        return _build_cors_prelight_response()
+    else:
+        return _corsify_actual_response({'comments': ','.join(comments)})
+
+@app.route("/api/set_comment", methods=['POST', 'OPTIONS'])
+def get_comment():
+    if request.method == "OPTIONS":  # CORS preflight
+        return _build_cors_prelight_response()
+    else:
+        comment = request.get_data()
+        comments.append(comment)
+        print(comments)
+        return _corsify_actual_response({'message': 'comment added successfully'})
 
 @app.route("/api/check_credentials", methods=['POST', 'OPTIONS'])
 def index():
@@ -56,10 +76,10 @@ def change_user():
                 print(username_data["new_username"])
                 if os.name == 'nt':
                     os.system(
-                        'mkdir public\\content\\' + username_data["new_username"] + f'&& move public\content\{username}\* public\content\{username_data["new_username"]}\ && dir')
+                        'mkdir public\\content\\' + username_data["new_username"] + f'&& move public\\content\\{username}\\* public\\content\\{username_data["new_username"]}\\')
                 else:
                     os.system(
-                        'mkdir public/content/' + username_data["new_username"] + f'; mv public/content/{username}/* public/content/{username_data["new_username"]}/ ; dir')
+                        'mkdir public/content/' + username_data["new_username"] + f'; mv public/content/{username}/* public/content/{username_data["new_username"]}/')
 
             username = username_data['new_username']
         except:
@@ -72,7 +92,9 @@ def check_make_dir(path):  # USE DOUBLE BACK SLASH.
     if not os.path.isdir(path):
         if os.name == 'nt':
             path = path.replace('/', '\\')
-        os.system('mkdir ' + path)
+            os.system('mkdir ' + path)
+        else:
+            os.system('sudo mkdir ' + path)
         return True
     return False
 
@@ -88,7 +110,7 @@ def _build_cors_prelight_response():
 def _corsify_actual_response(response):
     response = make_response(response)
     response.headers.add("Access-Control-Allow-Origin",
-     "http://52.172.233.113")
+     "http://localhost:3000")
     # response.headers.add("Access-Control-Allow-Origin",
     #                      "http://localhost:3000")
     response.headers.add('Access-Control-Allow-Credentials', 'true')
